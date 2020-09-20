@@ -1,0 +1,3 @@
+﻿  Source.cpp
+c:\users\asus\source\repos\laba1_detailsqueue\laba1_detailsqueue\ring.h(38): warning C4715: Delete: значение возвращается не при всех путях выполнения
+  Algotithms.vcxproj -> C:\Users\Asus\source\repos\Algotithms\Debug\Laba1_DetailsQueue.exe
