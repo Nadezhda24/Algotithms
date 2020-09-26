@@ -2,7 +2,7 @@
 #define _LIST_H
 #include <cstdlib> 
 #include "Struct.h"
-
+#define MAX 5
 
 struct List {
 	ElType x;
@@ -19,7 +19,10 @@ struct Queue {
 	List *head, *tail, *ptr;
 };
 
-Queue mas[5];
+struct Disck {
+	Queue mas[MAX];
+};
+
 
 //инициализация узла
 struct List* Init(ElType el) {
@@ -71,38 +74,90 @@ struct List* AddEl(List*q, ElType a) {
 
 
 //инициализация очереди
-void InitQueue(Queue *q) {
-	q->head = q->tail = 0;
+void InitQueue(Disck *q) {
+	for (int i = 0; i < MAX; i++) {
+		q->mas[i].head = q->mas[i].tail = 0;
+	}
 }
 
 //пустота
-bool Empty(Queue *q) {
-	if (q->head == 0) return true;
+bool Empty(Disck *q) {
+	if (q->mas[0].head == 0) return true;
 	else return false;
 }
 
 //вставка элемента в очередь
-void Add(Queue *q, ElType a) {
+void Add(Disck *q, ElType a) {
 	if (Empty(q)) {
-		q->tail = Init(a);
-		q->head = q->tail;
+		q->mas[0].tail = Init(a);
+		q->mas[0].head = q->mas[0].tail;
+		if (a.certificate == true) {
+			q->mas[1].tail = Init(a);
+			q->mas[1].head = q->mas[1].tail;
+		}
+		else if (a.exam1 == 5 && a.exam2 == 5 && a.exam3 == 5) {
+			q->mas[2].tail = Init(a);
+			q->mas[2].head = q->mas[2].tail;
+		}
+		else if (a.city != "Orel") {
+			q->mas[3].tail = Init(a);
+			q->mas[3].head = q->mas[3].tail;
+		}
+		else if (a.hostel == true) {
+			q->mas[4].tail = Init(a);
+			q->mas[4].head = q->mas[4].tail;
+		}
 	}
 	else {
-		q->tail = AddEl(q->tail, a);
+		q->mas[0].tail = AddEl(q->mas[0].tail, a);
+		if (a.certificate == true) {
+			q->mas[1].tail = AddEl(q->mas[1].tail, a);
+		}
+		else if (a.exam1 == 5 && a.exam2 == 5 && a.exam3 == 5) {
+			q->mas[1].tail = AddEl(q->mas[2].tail, a);
+		}
+		else if (a.city != "Orel") {
+			q->mas[1].tail = AddEl(q->mas[3].tail, a);
+		}
+		else if (a.hostel == true) {
+			q->mas[1].tail = AddEl(q->mas[4].tail, a);
+		}
 	}
 }
 
-void Clear(Queue *q) {
-	q->head = q->tail = 0;
+void Clear(Disck *q) {
+	for (int i = 0; i < MAX; i++) {
+		q->mas[i].head = q->mas[i].tail = 0;
+	}
 }
 
-ElType Delete(Queue *q) {
+ElType Delete(Disck *q) {
 	List *temp;
 	ElType x;
 	if (!Empty(q)) {
-		x = q->head->x;
-		temp = q->head;
-		q->head = q->head->tpr;
+		x = q->mas[0].head->x;
+		temp = q->mas[0].head;
+		q->mas[0].head = q->mas[0].head->tpr;
+		if (q->mas[1].head->x.certificate == true) {
+			x = q->mas[1].head->x;
+			temp = q->mas[1].head;
+			q->mas[1].head = q->mas[1].head->tpr;
+		}
+		else if (q->mas[2].head->x.exam1 == 5 && q->mas[2].head->x.exam2 == 5 && q->mas[2].head->x.exam3 == 5) {
+			x = q->mas[2].head->x;
+			temp = q->mas[2].head;
+			q->mas[2].head = q->mas[2].head->tpr;
+		}
+		else if (q->mas[3].head->x.city != "Orel") {
+			x = q->mas[3].head->x;
+			temp = q->mas[3].head;
+			q->mas[3].head = q->mas[3].head->tpr;
+		}
+		else if (q->mas[4].head->x.hostel == true) {
+			x = q->mas[4].head->x;
+			temp = q->mas[4].head;
+			q->mas[4].head = q->mas[4].head->tpr;
+		}
 		free(temp);
 		return x;
 	}
