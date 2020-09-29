@@ -10,7 +10,7 @@ int main() {
 
 	cout << "Задачи:" << endl << "1.Ввод записи об абитуриенте" << endl << "2.Вывод абитуриентов, у которых все экзамена сданы на отл." <<
 		endl << "3.Вывод абитуриентов, у которых аттестат с отличием" << endl << "4.Вывод абитуриентов, которые проживают за пределами населенного пункта" << endl << "5.Вывод абитуриентов, которые нуждаются в общажитии." << endl
-		<< "6.Вывод полного списка" << endl << "7. Удаление записи об абитуриенте" << endl << "5.Удаление всех записей" << endl;
+		<< "6.Вывод полного списка" << endl << "7.Удаление записи об абитуриенте" << endl << "8.Удаление всех записей" << endl;
 
 	Disck *q, *temp;
 	q = (Disck*)malloc(sizeof(Disck));
@@ -26,31 +26,100 @@ int main() {
 		switch (k)
 		{
 		case 1:
-			cin >> x.surname/*>> x.exam1>>x.exam2>>x.exam3>>x.certificate>> x.city>>x.hostel*/;
+			cout << "Введите фамилию: ";
+			cin >> x.surname;
+			cout << "Введите 1ую оценку: ";
+			cin >> x.exam1;
+			cout << "Введите 2ую оценку: ";
+			cin >> x.exam2;
+			cout << "Введите 3ью оценку: ";
+			cin >> x.exam3;
+			cout << "Введите наличие аттестата: ";
+			cin >> x.certificate;
+			cout << "Введите город: ";
+			cin >> x.city;
+			cout << "Введите критерий необходимости в общежитии: ";
+			cin >> x.hostel;
 			Add(q, x);
 			break;
 		case 2:
-			
-			break;
-		case 3:
-			
-		case 4:
-			while (!Empty(q)) {
-				cout << q->mas[0].head->x.surname<< endl;
+			while (!Empty(q,2)) {
+				cout << "Студент " << q->mas[2].head->x.surname << endl;
 				x = Delete(q);
 				Add(temp, x);
 			}
 			Clear(q);
-			while (!Empty(temp)) {
+			while (!Empty(temp,2)) {
 				Add(q, Delete(temp));
 			}
-			if (Empty(q)) {
-				cout << "Нет деталей для обработки." << endl;
+			if (Empty(q, 2)) {
+				cout << "Список пуст" << endl;
 			}
 			break;
-		case 5:
+		case 3:
+			while (!Empty(q,1)) {
+				cout << "Студент " << q->mas[1].head->x.surname << endl;
+				x = Delete(q);
+				Add(temp, x);
+			}
 			Clear(q);
-			cout << "Процесс сброшен." << endl;
+			while (!Empty(temp, 1)) {
+				Add(q, Delete(temp));
+			}
+			if (Empty(q, 1)) {
+				cout << "Список пуст" << endl;
+			}
+		case 4:
+			while (!Empty(q, 3)) {
+				cout << "Студент " << q->mas[3].head->x.surname << endl;
+				x = Delete(q);
+				Add(temp, x);
+			}
+			Clear(q);
+			while (!Empty(temp,3)) {
+				Add(q, Delete(temp));
+			}
+			if (Empty(q, 3)) {
+				cout << "Список пуст" << endl;
+			}			break;
+		case 5:
+			while (!Empty(q, 4)) {
+				cout << "Студент " << q->mas[4].head->x.surname << endl;
+				x = Delete(q);
+				Add(temp, x);
+			}
+			Clear(q);
+			while (!Empty(temp, 4)) {
+				Add(q, Delete(temp));
+			}
+			if (Empty(q, 4)) {
+				cout << "Список пуст" << endl;
+			}
+			break;
+		case 6:
+			while (!Empty(q, 0)) {
+				cout << "Студент " << q->mas[0].head->x.surname << endl;
+				x = Delete(q);
+				Add(temp, x);
+			}
+			Clear(q);
+			while (!Empty(temp, 0)) {
+				Add(q, Delete(temp));
+			}
+			if (Empty(q, 0)) {
+				cout << "Список пуст" << endl;
+			}
+			break;
+		case 7:
+			if (!Empty(q, 0)) {
+				cout << "Студент " << q->mas[0].head->x.surname << " удален из списка"  << endl;
+				Delete(q);
+			}
+			else cout << "Список пуст" << endl;
+			break;
+		case 8:
+			Clear(q);
+			cout << "Список очищен" << endl;
 			break;
 
 		default:

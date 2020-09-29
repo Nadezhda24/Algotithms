@@ -81,48 +81,58 @@ void InitQueue(Disck *q) {
 }
 
 //пустота
-bool Empty(Disck *q) {
-	if (q->mas[0].head == 0) return true;
+bool Empty(Disck *q, int i) {
+	if (q->mas[i].head == 0) return true;
 	else return false;
 }
 
 //вставка элемента в очередь
 void Add(Disck *q, ElType a) {
-	if (Empty(q)) {
+	if (Empty(q, 0)) {
 		q->mas[0].tail = Init(a);
 		q->mas[0].head = q->mas[0].tail;
+	}
+	else {
+		q->mas[0].tail = AddEl(q->mas[0].tail, a);
+	}
+	if (Empty(q, 1)) {
 		if (a.certificate == true) {
 			q->mas[1].tail = Init(a);
 			q->mas[1].head = q->mas[1].tail;
 		}
-		else if (a.exam1 == 5 && a.exam2 == 5 && a.exam3 == 5) {
+	}
+	else {
+		q->mas[1].tail = AddEl(q->mas[1].tail, a);
+	}
+	if (Empty(q, 2)) {
+		if (a.exam1 == 5 && a.exam2 == 5 && a.exam3 == 5) {
 			q->mas[2].tail = Init(a);
 			q->mas[2].head = q->mas[2].tail;
 		}
-		else if (a.city != "Orel") {
+	}
+	else {
+		q->mas[2].tail = AddEl(q->mas[2].tail, a);
+	}
+	if (Empty(q, 3)) {
+		if (a.city != "Orel") {
 			q->mas[3].tail = Init(a);
 			q->mas[3].head = q->mas[3].tail;
 		}
-		else if (a.hostel == true) {
+	}
+	else {
+		q->mas[3].tail = AddEl(q->mas[3].tail, a);
+	}
+	if (Empty(q, 4)) {
+		if (a.hostel == true) {
 			q->mas[4].tail = Init(a);
 			q->mas[4].head = q->mas[4].tail;
 		}
 	}
 	else {
-		q->mas[0].tail = AddEl(q->mas[0].tail, a);
-		if (a.certificate == true) {
-			q->mas[1].tail = AddEl(q->mas[1].tail, a);
-		}
-		else if (a.exam1 == 5 && a.exam2 == 5 && a.exam3 == 5) {
-			q->mas[1].tail = AddEl(q->mas[2].tail, a);
-		}
-		else if (a.city != "Orel") {
-			q->mas[1].tail = AddEl(q->mas[3].tail, a);
-		}
-		else if (a.hostel == true) {
-			q->mas[1].tail = AddEl(q->mas[4].tail, a);
-		}
+		q->mas[4].tail = AddEl(q->mas[4].tail, a);
 	}
+	
+
 }
 
 void Clear(Disck *q) {
@@ -134,34 +144,51 @@ void Clear(Disck *q) {
 ElType Delete(Disck *q) {
 	List *temp;
 	ElType x;
-	if (!Empty(q)) {
+	if (!Empty(q, 0)) {
 		x = q->mas[0].head->x;
 		temp = q->mas[0].head;
 		q->mas[0].head = q->mas[0].head->tpr;
+		free(temp);
+		return x;
+	}
+	if (!Empty(q, 1)) {
 		if (q->mas[1].head->x.certificate == true) {
 			x = q->mas[1].head->x;
 			temp = q->mas[1].head;
 			q->mas[1].head = q->mas[1].head->tpr;
+			free(temp);
+			return x;
 		}
-		else if (q->mas[2].head->x.exam1 == 5 && q->mas[2].head->x.exam2 == 5 && q->mas[2].head->x.exam3 == 5) {
+	}
+	if (!Empty(q, 2)) {
+		if (q->mas[2].head->x.exam1 == 5 && q->mas[2].head->x.exam2 == 5 && q->mas[2].head->x.exam3 == 5) {
 			x = q->mas[2].head->x;
 			temp = q->mas[2].head;
 			q->mas[2].head = q->mas[2].head->tpr;
+			free(temp);
+			return x;
 		}
-		else if (q->mas[3].head->x.city != "Orel") {
+	}
+	if (!Empty(q, 3)) {
+		if (q->mas[3].head->x.city != "Orel") {
 			x = q->mas[3].head->x;
 			temp = q->mas[3].head;
 			q->mas[3].head = q->mas[3].head->tpr;
+			free(temp);
+			return x;
 		}
-		else if (q->mas[4].head->x.hostel == true) {
+	}
+	if (!Empty(q, 4)) {
+		if (q->mas[4].head->x.hostel == true) {
 			x = q->mas[4].head->x;
 			temp = q->mas[4].head;
 			q->mas[4].head = q->mas[4].head->tpr;
+			free(temp);
+			return x;
 		}
-		free(temp);
-		return x;
 	}
+		
+		
 }
-
 _CRT_SECURE_NO_WARNINGS
 #endif
