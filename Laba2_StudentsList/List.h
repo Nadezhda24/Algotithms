@@ -1,6 +1,7 @@
 #ifndef _LIST_H
 #define _LIST_H
 #include <cstdlib> 
+#include <string.h>
 #include "Struct.h"
 #define MAX 5
 
@@ -95,43 +96,46 @@ void Add(Disck *q, ElType a) {
 	else {
 		q->mas[0].tail = AddEl(q->mas[0].tail, a);
 	}
-	if (Empty(q, 1)) {
-		if (a.certificate == true) {
+	if (a.certificate == true) {
+		if (Empty(q, 1)) {
 			q->mas[1].tail = Init(a);
 			q->mas[1].head = q->mas[1].tail;
 		}
+		else {
+			q->mas[1].tail = AddEl(q->mas[1].tail, a);
+		}
 	}
-	else {
-		q->mas[1].tail = AddEl(q->mas[1].tail, a);
-	}
-	if (Empty(q, 2)) {
-		if (a.exam1 == 5 && a.exam2 == 5 && a.exam3 == 5) {
+	if (a.exam1 == 5 && a.exam2 == 5 && a.exam3 == 5) {
+		if (Empty(q, 2)) {
+
 			q->mas[2].tail = Init(a);
 			q->mas[2].head = q->mas[2].tail;
 		}
+
+		else {
+			q->mas[2].tail = AddEl(q->mas[2].tail, a);
+		}
 	}
-	else {
-		q->mas[2].tail = AddEl(q->mas[2].tail, a);
-	}
-	if (Empty(q, 3)) {
-		if (a.city != "Orel") {
+	if (strcmp(a.city, "Orel") != 0) {
+		if (Empty(q, 3)) {
+
 			q->mas[3].tail = Init(a);
 			q->mas[3].head = q->mas[3].tail;
 		}
+		else {
+			q->mas[3].tail = AddEl(q->mas[3].tail, a);
+		}
 	}
-	else {
-		q->mas[3].tail = AddEl(q->mas[3].tail, a);
-	}
-	if (Empty(q, 4)) {
-		if (a.hostel == true) {
+	if (a.hostel == true) {
+		if (Empty(q, 4)) {
+
 			q->mas[4].tail = Init(a);
 			q->mas[4].head = q->mas[4].tail;
 		}
+		else {
+			q->mas[4].tail = AddEl(q->mas[4].tail, a);
+		}
 	}
-	else {
-		q->mas[4].tail = AddEl(q->mas[4].tail, a);
-	}
-	
 
 }
 
@@ -141,54 +145,55 @@ void Clear(Disck *q) {
 	}
 }
 
-ElType Delete(Disck *q) {
+ElType Pop(Disck *q) {
 	List *temp;
 	ElType x;
-	if (!Empty(q, 0)) {
+	if (!Empty(q, 0)){
+		
+		if (q->mas[0].head->x.certificate == true) {
+			if (!Empty(q, 1)) {
+				x = q->mas[1].head->x;
+				temp = q->mas[1].head;
+				q->mas[1].head = q->mas[1].head->tpr;
+				free(temp);
+			}
+		}
+
+	if (q->mas[0].head->x.exam1 == 5 && q->mas[0].head->x.exam2 == 5 && q->mas[0].head->x.exam3 == 5) {
+		if (!Empty(q, 2)) {
+			x = q->mas[2].head->x;
+			temp = q->mas[2].head;
+			q->mas[2].head = q->mas[2].head->tpr;
+			free(temp);
+		}
+	}
+
+	if (strcmp(q->mas[0].head->x.city, "Orel") != 0) {
+		if (!Empty(q, 3)) {
+			x = q->mas[3].head->x;
+			temp = q->mas[3].head;
+			q->mas[3].head = q->mas[3].head->tpr;
+			free(temp);
+		}
+	}
+
+	if (q->mas[0].head->x.hostel == true) {
+		if (!Empty(q, 4)) {
+			x = q->mas[4].head->x;
+			temp = q->mas[4].head;
+			q->mas[4].head = q->mas[4].head->tpr;
+			free(temp);
+		}
+	}
+
 		x = q->mas[0].head->x;
 		temp = q->mas[0].head;
 		q->mas[0].head = q->mas[0].head->tpr;
 		free(temp);
 		return x;
 	}
-	if (!Empty(q, 1)) {
-		if (q->mas[1].head->x.certificate == true) {
-			x = q->mas[1].head->x;
-			temp = q->mas[1].head;
-			q->mas[1].head = q->mas[1].head->tpr;
-			free(temp);
-			return x;
-		}
-	}
-	if (!Empty(q, 2)) {
-		if (q->mas[2].head->x.exam1 == 5 && q->mas[2].head->x.exam2 == 5 && q->mas[2].head->x.exam3 == 5) {
-			x = q->mas[2].head->x;
-			temp = q->mas[2].head;
-			q->mas[2].head = q->mas[2].head->tpr;
-			free(temp);
-			return x;
-		}
-	}
-	if (!Empty(q, 3)) {
-		if (q->mas[3].head->x.city != "Orel") {
-			x = q->mas[3].head->x;
-			temp = q->mas[3].head;
-			q->mas[3].head = q->mas[3].head->tpr;
-			free(temp);
-			return x;
-		}
-	}
-	if (!Empty(q, 4)) {
-		if (q->mas[4].head->x.hostel == true) {
-			x = q->mas[4].head->x;
-			temp = q->mas[4].head;
-			q->mas[4].head = q->mas[4].head->tpr;
-			free(temp);
-			return x;
-		}
-	}
-		
-		
 }
+
+
 _CRT_SECURE_NO_WARNINGS
 #endif
